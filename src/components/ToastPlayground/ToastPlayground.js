@@ -11,14 +11,22 @@ function ToastPlayground() {
   
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
   const [message, setMessage] = React.useState('');
-  const [popToast, setPopToast] = React.useState(false);
+  const [toasts, setToasts] = React.useState([]);
 
   React.useEffect(() => {
-    if (popToast) {
       console.log(`${variant} toast: ${message}`);
-      console.log(`popToast: ${popToast}`);
-    }
-  }, [variant, message, popToast]);
+  }, [variant, message]);
+
+  function createToast(event) {
+    event.preventDefault();
+    setToasts([...toasts, {id: crypto.randomUUID(), variant, message}]);
+
+    setMessage('');
+  }
+
+  function handleDismiss(id) {
+    setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -28,13 +36,11 @@ function ToastPlayground() {
       </header>
 
       <ToastShelf
-        variant={variant}
-        message={message}
-        popToast={popToast}
-        setPopToast={setPopToast}
-      ></ToastShelf>
+        toasts={toasts}
+        handleDismiss={handleDismiss}
+      />
 
-      <div className={styles.controlsWrapper}>
+      <form className={styles.controlsWrapper}>
         <div className={styles.row}>
           <label
             htmlFor="message"
@@ -83,10 +89,12 @@ function ToastPlayground() {
           <div
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            <Button onClick={() => {setPopToast(true);}}>Pop Toast!</Button>
+            <Button onClick={createToast}>
+              Pop Toast!
+            </Button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
