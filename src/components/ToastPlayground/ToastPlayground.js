@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '../Button';
-import Toast from '../Toast';
+import ToastShelf from '../ToastShelf/ToastShelf';
 
 import styles from './ToastPlayground.module.css';
 
@@ -16,9 +16,10 @@ function ToastPlayground() {
   React.useEffect(() => {
     if (popToast) {
       console.log(`${variant} toast: ${message}`);
+      console.log(`popToast: ${popToast}`);
     }
   }, [variant, message, popToast]);
-  
+
   return (
     <div className={styles.wrapper}>
       <header>
@@ -26,12 +27,12 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {popToast && <Toast
-        message={message}
+      <ToastShelf
         variant={variant}
+        message={message}
         popToast={popToast}
         setPopToast={setPopToast}
-      />}
+      ></ToastShelf>
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
