@@ -9,9 +9,7 @@ import styles from './ToastPlayground.module.css';
 function ToastPlayground() {
   const { 
       createToast,
-      VARIANT_OPTIONS,
-      toasts,
-      handleDismiss
+      VARIANT_OPTIONS
     } = React.useContext(ToastContext);
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
   const [message, setMessage] = React.useState('');
@@ -22,16 +20,6 @@ function ToastPlayground() {
     setMessage('');
   }
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      if (toasts.length > 0) {
-        const latestToast = toasts[toasts.length - 1];
-        handleDismiss(latestToast.id);
-      }
-    }
-  };
-
   return (
     <div className={styles.wrapper}>
       <header>
@@ -41,7 +29,7 @@ function ToastPlayground() {
 
       <ToastShelf/>
 
-      <form className={styles.controlsWrapper} onKeyDown={handleKeyDown}>
+      <form className={styles.controlsWrapper}>
         <div className={styles.row}>
           <label
             htmlFor="message"
