@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEscapeKey } from '../../hooks/use-escape-key';
+import { useKeyDown } from '../../hooks/use-key-down';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
@@ -16,7 +16,10 @@ function ToastProvider({ children }) {
     setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
-  useEscapeKey(() => setToasts([]));
+  const handleEscape = React.useCallback(() => {
+    setToasts([]);
+  }, []);
+  useKeyDown('Escape', handleEscape);
 
   return (
     <ToastContext.Provider value={{ 
