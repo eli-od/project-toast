@@ -24,16 +24,23 @@ function Toast({message, variant, id}) {
   const IconComponent = ICONS_BY_VARIANT[variant];
   
   return (
-    <div className={`${styles.toast} ${styles[variant]}`}>
+    <div 
+      className={`${styles.toast} ${styles[variant]}`}
+    >
       <div className={styles.iconContainer}>
         <IconComponent size={24} />
       </div>
       <p className={styles.content}>
+        <VisuallyHidden>{`${variant} - `}</VisuallyHidden>
         {message}
       </p>
-      <button className={styles.closeButton} onClick={() => {handleDismiss(id)}}>
+      <button 
+        className={styles.closeButton} 
+        onClick={() => {handleDismiss(id)}} 
+        aria-label={`Dismiss message`} 
+        aria-live={"off"}
+      >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
